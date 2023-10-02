@@ -1,3 +1,4 @@
+import { useClick } from './hooks/click';
 import { useInput, useValidatedInput } from './hooks/input';
 import useTaps from './hooks/taps';
 import { useTitle } from './hooks/title';
@@ -14,10 +15,13 @@ const content = [
 ];
 
 function App() {
-  const setTitle = useTitle('Loading...');
+  const setHtmlTitle = useTitle('Loading...');
   setTimeout(() => {
-    setTitle('home');
+    setHtmlTitle('home');
   }, 3000);
+
+  const sayHello = () => console.log('hello~');
+  const titleRef = useClick(sayHello);
 
   const name = useInput('Mr. ');
 
@@ -28,7 +32,7 @@ function App() {
 
   return (
     <div>
-      <h1>Hello Test World!!</h1>
+      <h1 ref={titleRef}>Hello Test World!!</h1>
       <input placeholder="Name" {...name} />
       <input placeholder="Name limited 10" {...validatedName} />
       <div>
