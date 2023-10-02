@@ -1,5 +1,6 @@
 import { useInput, useValidatedInput } from './hooks/input';
 import useTaps from './hooks/taps';
+import { useTitle } from './hooks/title';
 
 const content = [
   {
@@ -13,6 +14,11 @@ const content = [
 ];
 
 function App() {
+  const setTitle = useTitle('Loading...');
+  setTimeout(() => {
+    setTitle('home');
+  }, 3000);
+
   const name = useInput('Mr. ');
 
   const maxLen = (value) => value.length <= 10;
