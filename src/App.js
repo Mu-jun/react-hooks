@@ -2,6 +2,8 @@ import { useClick } from './hooks/click';
 import { useInput, useValidatedInput } from './hooks/input';
 import useTaps from './hooks/taps';
 import { useTitle } from './hooks/title';
+import { useConfirm } from './hooks/confirm';
+import { usePreventLeave } from './hooks/preventLeave';
 
 const content = [
   {
@@ -20,8 +22,14 @@ function App() {
     setHtmlTitle('home');
   }, 3000);
 
+  const { enablePrevent, disablePrevent } = usePreventLeave();
+
   const sayHello = () => console.log('hello~');
   const titleRef = useClick(sayHello);
+
+  const confirmFn = () => console.log('confirm');
+  const cancelFn = () => console.log('cancel');
+  const confirmAction = useConfirm('confirm message', confirmFn, cancelFn);
 
   const name = useInput('Mr. ');
 
@@ -32,7 +40,13 @@ function App() {
 
   return (
     <div>
+      <div>
+        <button onClick={enablePrevent}>prevent on</button>
+        <button onClick={disablePrevent}>prevent off</button>
+      </div>
       <h1 ref={titleRef}>Hello Test World!!</h1>
+      <button onClick={confirmAction}>confirm test</button>
+      <br />
       <input placeholder="Name" {...name} />
       <input placeholder="Name limited 10" {...validatedName} />
       <div>
