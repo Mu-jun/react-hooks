@@ -5,6 +5,7 @@ import { useTitle } from './hooks/title';
 import { useConfirm } from './hooks/confirm';
 import { usePreventLeave } from './hooks/preventLeave';
 import { useScroll } from './hooks/scroll';
+import { useNotification } from './hooks/notification';
 
 const content = [
   {
@@ -41,6 +42,8 @@ function App() {
 
   const { currentItem, setItem } = useTaps(0, content);
 
+  const triggerNotif = useNotification('Hey~~');
+
   return (
     <div style={{ height: '1000vh' }}>
       <div>
@@ -58,6 +61,7 @@ function App() {
         ))}
         <div>{currentItem.content}</div>
       </div>
+      <button onClick={triggerNotif}>Notif</button>
       <h1
         ref={titleRef}
         style={{ position: 'fixed', color: scrollY > 100 ? 'red' : 'black' }}
