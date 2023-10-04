@@ -4,6 +4,7 @@ import useTaps from './hooks/taps';
 import { useTitle } from './hooks/title';
 import { useConfirm } from './hooks/confirm';
 import { usePreventLeave } from './hooks/preventLeave';
+import { useScroll } from './hooks/scroll';
 
 const content = [
   {
@@ -27,6 +28,8 @@ function App() {
   const sayHello = () => console.log('hello~');
   const titleRef = useClick(sayHello);
 
+  const { scrollY } = useScroll();
+
   const confirmFn = () => console.log('confirm');
   const cancelFn = () => console.log('cancel');
   const confirmAction = useConfirm('confirm message', confirmFn, cancelFn);
@@ -39,12 +42,12 @@ function App() {
   const { currentItem, setItem } = useTaps(0, content);
 
   return (
-    <div>
+    <div style={{ height: '1000vh' }}>
       <div>
         <button onClick={enablePrevent}>prevent on</button>
         <button onClick={disablePrevent}>prevent off</button>
       </div>
-      <h1 ref={titleRef}>Hello Test World!!</h1>
+
       <button onClick={confirmAction}>confirm test</button>
       <br />
       <input placeholder="Name" {...name} />
@@ -55,6 +58,12 @@ function App() {
         ))}
         <div>{currentItem.content}</div>
       </div>
+      <h1
+        ref={titleRef}
+        style={{ position: 'fixed', color: scrollY > 100 ? 'red' : 'black' }}
+      >
+        Hello Test World!!
+      </h1>
     </div>
   );
 }
